@@ -83,9 +83,9 @@ cp backend/.env.example backend/.env
 ```
 Ensure `backend/.env` contains your Neon pooled and direct connection strings:
 ```env
-DATABASE_URL=postgresql+asyncpg://neondb_owner:<YOUR_PASSWORD>@ep-late-grass-az9n8r4l-pooler.c-3.ap-southeast-1.aws.neon.tech/neondb?ssl=require
-DATABASE_URL_DIRECT=postgresql+asyncpg://neondb_owner:<YOUR_PASSWORD>@ep-late-grass-az9n8r4l.c-3.ap-southeast-1.aws.neon.tech/neondb?ssl=require
-SECRET_KEY=32-length-secret
+DATABASE_URL=postgresql+asyncpg://user:password@host:6543/dbname?sslmode=require
+DATABASE_URL_DIRECT=postgresql+asyncpg://user:password@host:5432/dbname?sslmode=require
+SECRET_KEY=your-secret-key-minimum-32-characters
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=60
 ENVIRONMENT=development
