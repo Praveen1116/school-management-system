@@ -162,6 +162,27 @@ school-management-system/
 
 ---
 
+### Quick Start with Docker (Recommended)
+
+To run the entire full-stack system in isolated production containers:
+
+1. **Ensure `backend/.env` is configured with your database string:**
+   ```bash
+   cp backend/.env.example backend/.env
+   # Update DATABASE_URL in backend/.env
+   ```
+
+2. **Build and launch both containers:**
+   ```bash
+   docker compose up --build
+   ```
+
+3. **Access the application:**
+   - **Frontend**: [http://localhost:3000](http://localhost:3000)
+   - **Backend API & Swagger Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
+
+---
+
 ## Demo Accounts
 
 All credentials are created automatically by `seed.py`:
