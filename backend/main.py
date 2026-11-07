@@ -34,6 +34,7 @@ from modules.reports.router import (
     dashboard_router
 )
 from modules.audit.router import router as audit_router
+from modules.setup.router import router as setup_router
 
 app = FastAPI(
     title="School Management System API",
@@ -133,6 +134,7 @@ app.include_router(fees_router, prefix="/api/fees", tags=["fees"])
 app.include_router(guardian_router, prefix="/api/guardian", tags=["guardian"])
 app.include_router(reports_router, prefix="/api/reports", tags=["reports"])
 app.include_router(audit_router, prefix="/api/audit-logs", tags=["audit"])
+app.include_router(setup_router, prefix="/api/setup", tags=["setup"])
 
 # Direct path aliases specified in route requirements
 app.include_router(dashboard_router, prefix="/api/dashboard", tags=["reports"])

@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 const NAV_LINKS: Record<string, Array<{ label: string; to: string }>> = {
   admin: [
     { label: 'Dashboard', to: '/admin/dashboard' },
+    { label: 'Admins', to: '/admin/admins' },
     { label: 'Students', to: '/admin/students' },
     { label: 'Teachers', to: '/admin/teachers' },
     { label: 'Classes', to: '/admin/classes' },

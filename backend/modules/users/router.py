@@ -13,18 +13,20 @@ router = APIRouter()
 async def list_users(
     page: int = Query(1, ge=1),
     limit: int = Query(20, ge=1, le=100),
+    role: str | None = Query(None),
     db: AsyncSession = Depends(get_db),
     admin = Depends(require_admin)
 ):
-    """Admin-only endpoint to list all users with pagination."""
-    users, total = await users_service.list_users(db, page=page, limit=limit)
+    """Admin-only endpoint to list all users with pagination and optional role filter."""
+    users, total = await users_service.list_users(db, page=page, limit=limit, role=role)
     data = [
         UserResponse(
             id=u.id,
             email=u.email,
             role=u.role,
             is_active=u.is_active,
-            created_at=u.created_at
+            created_at=u.created_at,
+            full_name=u.full_name
         ).model_dump()
         for u in users
     ]
@@ -50,7 +52,8 @@ async def create_user(
         db=db,
         email=payload.email,
         password_hash=pwd_hash,
-        role=payload.role
+        role=payload.role,
+        full_name=payload.full_name
     )
 
     await audit_service.log_action(
@@ -60,7 +63,7 @@ async def create_user(
         entity_type="user",
         entity_id=user.id,
         old_value=None,
-        new_value={"email": user.email, "role": user.role}
+        new_value={"email": user.email, "role": user.role, "full_name": user.full_name}
     )
     await db.commit()
     await db.refresh(user)
@@ -70,7 +73,8 @@ async def create_user(
         email=user.email,
         role=user.role,
         is_active=user.is_active,
-        created_at=user.created_at
+        created_at=user.created_at,
+        full_name=user.full_name
     ).model_dump()
     return success_response(data=data, message="User created successfully")
 
@@ -93,7 +97,8 @@ async def get_user(
         email=user.email,
         role=user.role,
         is_active=user.is_active,
-        created_at=user.created_at
+        created_at=user.created_at,
+        full_name=user.full_name
     ).model_dump()
     return success_response(data=data, message="User retrieved")
 
@@ -104,7 +109,7 @@ async def update_user(
     db: AsyncSession = Depends(get_db),
     admin = Depends(require_admin)
 ):
-    """Admin-only endpoint to update email or role of a user."""
+    """Admin-only endpoint to update email, role, or full name of a user."""
     user = await users_service.get_user_by_id(db, user_id)
     if not user:
         raise AppException(
@@ -122,9 +127,15 @@ async def update_user(
                 message=f"User with email {payload.email} already exists"
             )
 
-    old_val = {"email": user.email, "role": user.role}
-    user = await users_service.update_user(db, user, email=payload.email, role=payload.role)
-    new_val = {"email": user.email, "role": user.role}
+    old_val = {"email": user.email, "role": user.role, "full_name": user.full_name}
+    user = await users_service.update_user(
+        db,
+        user,
+        email=payload.email,
+        role=payload.role,
+        full_name=payload.full_name
+    )
+    new_val = {"email": user.email, "role": user.role, "full_name": user.full_name}
 
     await audit_service.log_action(
         db=db,
@@ -143,7 +154,8 @@ async def update_user(
         email=user.email,
         role=user.role,
         is_active=user.is_active,
-        created_at=user.created_at
+        created_at=user.created_at,
+        full_name=user.full_name
     ).model_dump()
     return success_response(data=data, message="User updated successfully")
 

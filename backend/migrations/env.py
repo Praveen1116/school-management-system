@@ -36,6 +36,7 @@ from modules.attendance.model import AttendanceRecord
 from modules.exams.model import GradingRule, Exam, ExamResult
 from modules.fees.model import FeeInvoice, FeePayment
 from modules.audit.model import AuditLog
+from modules.setup.model import School
 
 # this is the Alembic Config object
 config = context.config

@@ -7,8 +7,10 @@ import ProtectedRoute from '@/components/ProtectedRoute'
 import Spinner from '@/components/Spinner'
 
 import Login from '@/pages/Login'
+import Setup from '@/pages/Setup'
 
 import AdminDashboard from '@/pages/admin/Dashboard'
+import AdminAdmins from '@/pages/admin/Admins'
 import AdminStudents from '@/pages/admin/Students'
 import AdminStudentForm from '@/pages/admin/StudentForm'
 import AdminTeachers from '@/pages/admin/Teachers'
@@ -42,12 +44,14 @@ export default function App(): React.ReactElement {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/setup" element={<Setup />} />
       <Route path="/" element={<RootRedirect />} />
 
       {/* Admin Routes */}
       <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
         <Route element={<Layout />}>
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/admins" element={<AdminAdmins />} />
           <Route path="/admin/students" element={<AdminStudents />} />
           <Route path="/admin/students/new" element={<AdminStudentForm />} />
           <Route path="/admin/students/:id/edit" element={<AdminStudentForm />} />

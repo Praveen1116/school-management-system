@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '@/context/AuthContext'
+import { getSetupStatus } from '@/api/setup'
 import { getDashboardPath, extractError } from '@/utils/helpers'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -19,6 +20,22 @@ export default function Login(): React.ReactElement {
   const [error, setError] = useState<string | null>(null)
   const { login } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
+
+  const state = location.state
+  const successMsg = typeof state === 'object' && state !== null && 'message' in state && typeof state.message === 'string'
+    ? state.message
+    : null
+
+  useEffect(() => {
+    getSetupStatus()
+      .then((res) => {
+        if (res.data.data.is_setup_required) {
+          navigate('/setup', { replace: true })
+        }
+      })
+      .catch(() => {})
+  }, [navigate])
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -47,6 +64,11 @@ export default function Login(): React.ReactElement {
           </CardTitle>
         </CardHeader>
         <CardContent>
+          {successMsg && (
+            <div className="mb-4 p-3 bg-green-50 border border-green-200 text-green-800 rounded text-xs font-medium">
+              {successMsg}
+            </div>
+          )}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <Label htmlFor="email" className="text-slate-700">Email Address</Label>
@@ -88,4 +110,3 @@ export default function Login(): React.ReactElement {
     </div>
   )
 }
-

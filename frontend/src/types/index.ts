@@ -4,6 +4,14 @@ export interface User {
   role: 'admin' | 'teacher' | 'guardian'
   is_active: boolean
   created_at: string
+  full_name?: string | null
+}
+
+export interface CreateUserPayload {
+  email: string
+  password: string
+  role: 'admin' | 'teacher' | 'guardian'
+  full_name?: string
 }
 
 export interface Student {
@@ -226,4 +234,25 @@ export interface ApiError {
     code: string
     message: string
   }
+}
+
+export interface SetupStatus {
+  is_setup_required: boolean
+  school_name?: string | null
+  school_code?: string | null
+}
+
+export interface SetupPayload {
+  school_name: string
+  school_code: string
+  full_name: string
+  email: string
+  password: string
+}
+
+export interface SetupResult {
+  school_name: string
+  school_code: string
+  admin_email: string
+  admin_name: string
 }
