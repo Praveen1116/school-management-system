@@ -18,6 +18,11 @@ backend/.env
 .coverage
 htmlcov/
 
+# Dependencies & Build Outputs
+node_modules/
+dist/
+dist-ssr/
+
 # IDE & OS files
 .vscode/
 .idea/
