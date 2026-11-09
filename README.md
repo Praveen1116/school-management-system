@@ -10,8 +10,8 @@ A production-ready, full-stack School Management System featuring a **FastAPI** 
 - **Backend API & Swagger Docs**: [https://sms-9x94.onrender.com/docs](https://sms-9x94.onrender.com/docs) (Hosted on Render)
 - **Database**: PostgreSQL on [Neon.tech](https://neon.tech) (Serverless with pooling)
 
-> [!NOTE]
-> **Render Cold-Start Notice**: The backend is deployed on Render's free tier. If the instance is inactive, Render spins it down. The first request may take **30–45 seconds** to wake up the service. Subsequent requests respond instantly.
+> [!IMPORTANT]
+> **Live Demo First Load (Render Cold-Start)**: The backend API is hosted on Render's free tier. If the service has been idle, Render automatically spins down the container. **Please wait 30–45 seconds on your first page load or login attempt** while Render wakes up the backend. Once active, all subsequent requests, queries, and role transitions will respond with instant low latency.
 
 ---
 
@@ -195,6 +195,9 @@ To run the entire full-stack system in isolated production containers:
 ---
 
 ## Demo Accounts
+
+> [!TIP]
+> **First Login**: If logging in for the first time or after a period of inactivity, please wait **30–45 seconds** for Render to spin up the sleeping backend service before retrying.
 
 All credentials are created automatically by `seed.py` with 12 students across 3 classes, 3 teachers, and 5 guardians:
 
