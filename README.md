@@ -4,6 +4,17 @@ A production-ready, full-stack School Management System featuring a **FastAPI** 
 
 ---
 
+## 🌐 Live Deployments
+
+- **Web Application**: [https://sms-portal-fawn.vercel.app](https://sms-portal-fawn.vercel.app) (Hosted on Vercel)
+- **Backend API & Swagger Docs**: [https://sms-9x94.onrender.com/docs](https://sms-9x94.onrender.com/docs) (Hosted on Render)
+- **Database**: PostgreSQL on [Neon.tech](https://neon.tech) (Serverless with pooling)
+
+> [!NOTE]
+> **Render Cold-Start Notice**: The backend is deployed on Render's free tier. If the instance is inactive, Render spins it down. The first request may take **30–45 seconds** to wake up the service. Subsequent requests respond instantly.
+
+---
+
 ## Tech Stack
 
 ### Backend
@@ -185,15 +196,36 @@ To run the entire full-stack system in isolated production containers:
 
 ## Demo Accounts
 
-All credentials are created automatically by `seed.py`:
+All credentials are created automatically by `seed.py` with 12 students across 3 classes, 3 teachers, and 5 guardians:
 
 | Role | Email | Password | Access Details |
 | :--- | :--- | :--- | :--- |
-| **Admin** | `admin@school.demo` | `Admin@123` | Full administrative control across all modules |
-| **Teacher** | `teacher.a@school.demo` | `Teacher@123` | Amit Verma (`TCH001`), Class 10A (Mathematics & Science) |
-| **Teacher** | `teacher.b@school.demo` | `Teacher@123` | Sunita Rao (`TCH002`), Class 10B (English) |
-| **Guardian** | `guardian.a@school.demo` | `Guardian@123` | Guardian of Ravi Sharma, Arjun Singh, Rahul Das |
-| **Guardian** | `guardian.b@school.demo` | `Guardian@123` | Guardian of Priya Mehta, Sneha Patel |
+| **Admin** | `admin@school.demo` | `Admin@123` | System Administrator (Full control across all modules) |
+| **Teacher** | `teacher.a@school.demo` | `Teacher@123` | Amit Verma (`TCH001`), Class 10A & 11A (Mathematics & Science) |
+| **Teacher** | `teacher.b@school.demo` | `Teacher@123` | Sunita Rao (`TCH002`), Class 10B & 11A (English) |
+| **Teacher** | `teacher.c@school.demo` | `Teacher@123` | Ramesh Gupta (`TCH003`), Class 10A & 10B (History) |
+| **Guardian** | `guardian.a@school.demo` | `Guardian@123` | Rajesh Sharma (Guardian of Ravi Sharma, Arjun Singh, Rahul Das) |
+| **Guardian** | `guardian.b@school.demo` | `Guardian@123` | Vikram Mehta (Guardian of Priya Mehta, Sneha Patel) |
+| **Guardian** | `guardian.c@school.demo` | `Guardian@123` | Sanjay Verma (Guardian of Aditi Verma, Rohan Verma) |
+| **Guardian** | `guardian.d@school.demo` | `Guardian@123` | Anil Kapoor (Guardian of Kavya Kapoor, Vihaan Kapoor, Ananya Kapoor) |
+| **Guardian** | `guardian.e@school.demo` | `Guardian@123` | Sunil Joshi (Guardian of Ishaan Joshi, Diya Joshi) |
+
+### Demo Student Roster (12 Students)
+
+| Roll No | Student Name | Class | Guardian | Fee Status |
+| :--- | :--- | :--- | :--- | :--- |
+| `STU001` | Ravi Sharma | Class 10-A | Rajesh Sharma (`guardian.a@school.demo`) | Partial (₹3,000 due) |
+| `STU002` | Priya Mehta | Class 10-B | Vikram Mehta (`guardian.b@school.demo`) | Paid (₹0 due) |
+| `STU003` | Arjun Singh | Class 10-A | Rajesh Sharma (`guardian.a@school.demo`) | No Invoice |
+| `STU004` | Sneha Patel | Class 10-B | Vikram Mehta (`guardian.b@school.demo`) | No Invoice |
+| `STU005` | Rahul Das | Class 10-A | Rajesh Sharma (`guardian.a@school.demo`) | Unpaid (₹5,000 due) |
+| `STU006` | Aditi Verma | Class 10-A | Sanjay Verma (`guardian.c@school.demo`) | Partial (₹2,500 due) |
+| `STU007` | Rohan Verma | Class 10-B | Sanjay Verma (`guardian.c@school.demo`) | No Invoice |
+| `STU008` | Kavya Kapoor | Class 10-A | Anil Kapoor (`guardian.d@school.demo`) | Paid (₹0 due) |
+| `STU009` | Vihaan Kapoor | Class 10-B | Anil Kapoor (`guardian.d@school.demo`) | No Invoice |
+| `STU010` | Ananya Kapoor | Class 11-A | Anil Kapoor (`guardian.d@school.demo`) | Partial (₹3,000 due) |
+| `STU011` | Ishaan Joshi | Class 11-A | Sunil Joshi (`guardian.e@school.demo`) | Unpaid (₹6,000 due) |
+| `STU012` | Diya Joshi | Class 11-A | Sunil Joshi (`guardian.e@school.demo`) | No Invoice |
 
 ---
 
