@@ -43,14 +43,25 @@ app = FastAPI(
     redoc_url="/redoc"
 )
 
-# CORS middleware for development
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# CORS middleware supporting local development and cloud production (Vercel, Render)
+raw_cors = settings.CORS_ORIGINS or "*"
+if raw_cors.strip() == "*":
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origin_regex=r"^https?://.*",
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+else:
+    allowed = [origin.strip() for origin in raw_cors.split(",") if origin.strip()]
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=allowed,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
 # Custom exception handlers enforcing Standard Response Shape:
 # {"success": false, "error": {"code": "...", "message": "..."}}
