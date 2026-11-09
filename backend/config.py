@@ -1,3 +1,4 @@
+import urllib.parse
 from pathlib import Path
 from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -16,14 +17,22 @@ class Settings(BaseSettings):
     @field_validator("DATABASE_URL", "DATABASE_URL_DIRECT", mode="before")
     @classmethod
     def normalize_db_url(cls, v: str) -> str:
-        if isinstance(v, str):
-            if v.startswith("postgres://"):
-                v = v.replace("postgres://", "postgresql+asyncpg://", 1)
-            elif v.startswith("postgresql://") and not v.startswith("postgresql+asyncpg://"):
-                v = v.replace("postgresql://", "postgresql+asyncpg://", 1)
-            if "sslmode=" in v:
-                v = v.replace("sslmode=", "ssl=")
-        return v
+        if not isinstance(v, str) or not v.strip():
+            return v
+        parsed = urllib.parse.urlsplit(v.strip())
+        scheme = "postgresql+asyncpg"
+        query_params = urllib.parse.parse_qs(parsed.query)
+        clean_params: dict[str, str] = {}
+        needs_ssl = (
+            "ssl" in query_params or
+            "sslmode" in query_params or
+            "neon.tech" in parsed.netloc or
+            "aws." in parsed.netloc
+        )
+        if needs_ssl:
+            clean_params["ssl"] = "require"
+        clean_query = urllib.parse.urlencode(clean_params)
+        return urllib.parse.urlunsplit((scheme, parsed.netloc, parsed.path, clean_query, parsed.fragment))
 
     model_config = SettingsConfigDict(
         env_file=(str(BASE_DIR / ".env"), ".env"),
