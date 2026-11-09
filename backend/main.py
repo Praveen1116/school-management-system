@@ -124,8 +124,9 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
         }
     )
 
-# Root health check endpoint
-@app.get("/")
+# Root health check endpoint supporting both GET and HEAD methods for uptime monitoring
+@app.api_route("/", methods=["GET", "HEAD"])
+@app.api_route("/health", methods=["GET", "HEAD"])
 async def root():
     return {
         "status": "ok",
